@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import static com.example.fooddeliverysseapp.infra.FoodMapper.*;
+import static com.example.fooddeliverysseapp.infra.FoodMapper.fromOrderRequest;
 
 @RestController
 class FoodController {
@@ -23,8 +24,8 @@ class FoodController {
     }
 
     @GetMapping(path = "/food-stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    void foodStream() {
-        eventService.create();
+    SseEmitter foodStream() {
+        return eventService.create();
     }
 
     @PostMapping(path = "/order-food", produces = MediaType.APPLICATION_JSON_VALUE)
