@@ -8,6 +8,6 @@ class DtoFixture {
 
     public static FoodDto buildFoodDto() {
 
-        return new FoodDto("Hamburguer", IN_THE_KITCHEN);
+        return new FoodDto("Hamburguer");
     }
 }

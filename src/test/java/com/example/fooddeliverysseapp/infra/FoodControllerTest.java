@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import static com.example.fooddeliverysseapp.domain.FoodStatus.ORDER_PLACED;
 import static java.lang.Long.MAX_VALUE;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -59,7 +60,7 @@ class FoodControllerTest {
     void shouldOrderFood() throws Exception {
 
         var foodDto = DtoFixture.buildFoodDto();
-        var food = new Food(foodDto.name(), foodDto.status());
+        var food = new Food(foodDto.name(), ORDER_PLACED);
         var json = mapper.writeValueAsString(foodDto);
 
         doNothing()

@@ -1,7 +1,6 @@
 package com.example.fooddeliverysseapp.infra;
 
 import com.example.fooddeliverysseapp.domain.EventService;
-import com.example.fooddeliverysseapp.domain.Food;
 import com.example.fooddeliverysseapp.domain.FoodService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +30,6 @@ class FoodController {
     @PostMapping(path = "/order-food", produces = MediaType.APPLICATION_JSON_VALUE)
     void orderFood(@RequestBody FoodDto foodDto) {
 
-        foodService.order(fromFoodDto(foodDto));
+        foodService.order(fromOrderRequest(foodDto));
     }
 }
