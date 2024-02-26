@@ -8,13 +8,14 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import static com.example.fooddeliverysseapp.domain.FoodStatus.ORDER_PLACED;
 import static java.lang.Long.MAX_VALUE;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -33,6 +34,9 @@ class FoodControllerTest {
 
     @MockBean
     private FoodService foodService;
+
+    @Captor
+    private ArgumentCaptor<Food> food;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -60,18 +64,17 @@ class FoodControllerTest {
     void shouldOrderFood() throws Exception {
 
         var foodDto = DtoFixture.buildFoodDto();
-        var food = new Food(foodDto.name(), ORDER_PLACED);
         var json = mapper.writeValueAsString(foodDto);
 
         doNothing()
                 .when(foodService)
-                .order(food);
+                .order(food.capture());
 
         mockMvc.perform(post("/order-food")
                         .content(json)
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        verify(foodService).order(food);
+        verify(foodService).order(food.capture());
     }
 }

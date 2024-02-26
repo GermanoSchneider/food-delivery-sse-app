@@ -1,7 +1,6 @@
 package com.example.fooddeliverysseapp.application;
 
 import com.example.fooddeliverysseapp.ModelFixture;
-import com.example.fooddeliverysseapp.domain.EventService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,14 +17,14 @@ class FoodServiceTest {
     private FoodApplicaitonService foodService;
 
     @Mock
-    private EventService eventService;
+    private FoodListener foodListener;
 
     @Test
     void shouldOrderFoodWithSuccess() {
 
         var food = ModelFixture.buildFood();
 
-        doNothing().when(eventService).sendEvent(food, "order");
+        doNothing().when(foodListener).notifyAll(food);
 
         assertDoesNotThrow(() -> foodService.order(food));
     }
