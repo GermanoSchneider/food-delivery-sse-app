@@ -22,6 +22,11 @@ class SseService implements EventService {
         SseEmitter emitter = new SseEmitter(MAX_VALUE);
 
         emitter.onCompletion(() -> emitters.remove(emitter));
+        emitter.onTimeout(() -> emitters.remove(emitter));
+        emitter.onError(throwable -> {
+            emitters.remove(emitter);
+            emitter.completeWithError(throwable);
+        });
 
         emitters.add(emitter);
 

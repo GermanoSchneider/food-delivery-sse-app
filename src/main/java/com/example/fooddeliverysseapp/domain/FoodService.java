@@ -2,5 +2,5 @@ package com.example.fooddeliverysseapp.domain;
 
 public interface FoodService {
 
-    void order(Food food);
+    void order(OrderFood orderFood);
 }

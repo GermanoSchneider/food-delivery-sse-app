@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Delivery App</title>
+</head>
+<body>
+
+<h1>Food Delivery App</h1>
+
+<div id="orderFood-status">
+    <div>
+        <h2>Orders</h2>
+        <div id="orders"></div>
+    </div>
+    <hr/>
+    <div>
+        <h2>In the Kitchen</h2>
+        <div id="kitchen"></div>
+    </div>
+    <hr/>
+    <div>
+        <h2>On the way</h2>
+        <div id="on-the-way"></div>
+    </div>
+    <hr/>
+    <div>
+        <h2>Delivered</h2>
+        <div id="delivered"></div>
+    </div>
+</div>
+
+</body>
+
+
+<script>
+
+    var eventSource = new EventSource("/orderFood-stream");
+
+    eventSource.addEventListener("order", (event) => renderEvent("orders", event));
+
+    eventSource.addEventListener("kitchen", (event) => renderEvent("kitchen", event));
+
+    eventSource.addEventListener("on-the-way", (event) => renderEvent("on-the-way", event));
+
+    eventSource.addEventListener("delivered", (event) => renderEvent("delivered", event));
+
+    function renderEvent(id, event) {
+
+        var parsedValue = JSON.parse(event.data);
+
+        const data = document.getElementById(id);
+        const p = document.createElement("p");
+        const message = parsedValue.id + ": " + parsedValue.name;
+        const text = document.createTextNode(message);
+        p.appendChild(text)
+        data.appendChild(p);
+    }
+
+</script>
+
+</html>

@@ -1,14 +1,23 @@
 package com.example.fooddeliverysseapp.domain;
 
-public class Food {
+import java.util.Random;
+
+public class OrderFood {
+
+    private final Integer id;
 
     private final String name;
 
     private FoodStatus status;
 
-    public Food(String name, FoodStatus status) {
+    public OrderFood(String name, FoodStatus status) {
+        this.id = new Random().nextInt(3000, 5000);
         this.name = name;
         this.status = status;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getName() {

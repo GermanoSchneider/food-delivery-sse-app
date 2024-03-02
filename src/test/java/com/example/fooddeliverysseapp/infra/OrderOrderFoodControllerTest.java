@@ -1,7 +1,7 @@
 package com.example.fooddeliverysseapp.infra;
 
 import com.example.fooddeliverysseapp.domain.EventService;
-import com.example.fooddeliverysseapp.domain.Food;
+import com.example.fooddeliverysseapp.domain.OrderFood;
 import com.example.fooddeliverysseapp.domain.FoodService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -23,8 +23,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(FoodController.class)
-class FoodControllerTest {
+@WebMvcTest(OrderFoodController.class)
+class OrderFoodControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,7 +36,7 @@ class FoodControllerTest {
     private FoodService foodService;
 
     @Captor
-    private ArgumentCaptor<Food> food;
+    private ArgumentCaptor<OrderFood> food;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -54,7 +54,7 @@ class FoodControllerTest {
         doReturn(sseEmitter).when(eventService).create();
 
         mockMvc.perform(
-                get("/food-stream")
+                get("/order-status")
         ).andExpect(status().isOk());
 
         verify(eventService).create();

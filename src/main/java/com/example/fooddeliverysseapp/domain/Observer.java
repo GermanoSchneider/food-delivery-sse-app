@@ -16,7 +16,7 @@ public abstract class Observer {
 
         Random random = new Random();
 
-        double randomTime = random.nextDouble(2000, 5000);
+        double randomTime = random.nextDouble(2000, 10000);
 
         try {
             Thread.sleep(valueOf(randomTime).longValue());
@@ -25,9 +25,9 @@ public abstract class Observer {
         }
     }
 
-    protected void sendEvent(Food food, String eventName) {
-        eventService.sendEvent(food, eventName);
+    protected void sendEvent(OrderFood orderFood, String eventName) {
+        eventService.sendEvent(orderFood, eventName);
     }
 
-    public abstract void update(Food food);
+    public abstract void update(OrderFood orderFood);
 }

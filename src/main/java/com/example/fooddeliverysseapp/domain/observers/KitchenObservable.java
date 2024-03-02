@@ -1,7 +1,7 @@
 package com.example.fooddeliverysseapp.domain.observers;
 
 import com.example.fooddeliverysseapp.domain.EventService;
-import com.example.fooddeliverysseapp.domain.Food;
+import com.example.fooddeliverysseapp.domain.OrderFood;
 import com.example.fooddeliverysseapp.domain.Observer;
 import com.example.fooddeliverysseapp.domain.FoodStatus;
 
@@ -12,12 +12,12 @@ public class KitchenObservable extends Observer {
     }
 
     @Override
-    public void update(Food food) {
+    public void update(OrderFood orderFood) {
 
-        if (food.getStatus() == FoodStatus.ORDER_PLACED) {
+        if (orderFood.getStatus() == FoodStatus.ORDER_PLACED) {
 
-            sendEvent(food, "kitchen");
-            food.setStatus(FoodStatus.IN_THE_KITCHEN);
+            orderFood.setStatus(FoodStatus.IN_THE_KITCHEN);
+            sendEvent(orderFood, "kitchen");
             waitForProcess();
         }
     }

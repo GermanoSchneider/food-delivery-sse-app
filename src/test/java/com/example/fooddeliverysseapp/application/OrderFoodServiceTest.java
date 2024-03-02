@@ -11,20 +11,20 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.doNothing;
 
 @ExtendWith(MockitoExtension.class)
-class FoodServiceTest {
+class OrderFoodServiceTest {
 
     @InjectMocks
-    private FoodApplicaitonService foodService;
+    private OrderFoodApplicaitonService foodService;
 
     @Mock
-    private FoodListener foodListener;
+    private OrderFoodListener orderFoodListener;
 
     @Test
     void shouldOrderFoodWithSuccess() {
 
         var food = ModelFixture.buildFood();
 
-        doNothing().when(foodListener).notifyAll(food);
+        doNothing().when(orderFoodListener).notifyAll(food);
 
         assertDoesNotThrow(() -> foodService.order(food));
     }

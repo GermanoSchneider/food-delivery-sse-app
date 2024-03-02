@@ -16,10 +16,10 @@ import static com.example.fooddeliverysseapp.domain.FoodStatus.DELIVERED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-class FoodListenerTest {
+class OrderFoodListenerTest {
 
     @InjectMocks
-    private FoodListener foodListener;
+    private OrderFoodListener orderFoodListener;
 
     @Mock
     private EventService eventService;
@@ -34,7 +34,7 @@ class FoodListenerTest {
 
         var food = ModelFixture.buildFood();
 
-        foodListener.notifyAll(food);
+        orderFoodListener.notifyAll(food);
 
         Awaitility.await().untilAsserted(() -> assertEquals(DELIVERED, food.getStatus()));
     }

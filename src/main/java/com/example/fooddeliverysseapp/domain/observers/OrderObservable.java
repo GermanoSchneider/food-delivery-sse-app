@@ -1,7 +1,7 @@
 package com.example.fooddeliverysseapp.domain.observers;
 
 import com.example.fooddeliverysseapp.domain.EventService;
-import com.example.fooddeliverysseapp.domain.Food;
+import com.example.fooddeliverysseapp.domain.OrderFood;
 import com.example.fooddeliverysseapp.domain.Observer;
 
 import static com.example.fooddeliverysseapp.domain.FoodStatus.ORDER_PLACED;
@@ -13,11 +13,11 @@ public class OrderObservable extends Observer {
     }
 
     @Override
-    public void update(Food food) {
+    public void update(OrderFood orderFood) {
 
-        if (food.getStatus() == ORDER_PLACED) {
+        if (orderFood.getStatus() == ORDER_PLACED) {
 
-            sendEvent(food, "order");
+            sendEvent(orderFood, "order");
         }
     }
 }

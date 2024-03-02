@@ -1,7 +1,7 @@
 package com.example.fooddeliverysseapp.application;
 
 import com.example.fooddeliverysseapp.domain.EventService;
-import com.example.fooddeliverysseapp.domain.Food;
+import com.example.fooddeliverysseapp.domain.OrderFood;
 import com.example.fooddeliverysseapp.domain.Observer;
 import com.example.fooddeliverysseapp.domain.observers.DeliveredObservable;
 import com.example.fooddeliverysseapp.domain.observers.OnTheWayObservable;
@@ -13,13 +13,13 @@ import java.util.Collection;
 import java.util.List;
 
 @Component
-public class FoodListener {
+public class OrderFoodListener {
 
     private final EventService eventService;
 
     private final Collection<Observer> observers;
 
-    public FoodListener(EventService eventService) {
+    public OrderFoodListener(EventService eventService) {
         this.eventService = eventService;
         this.observers = List.of(
                 new OrderObservable(eventService),
@@ -29,7 +29,7 @@ public class FoodListener {
         );
     }
 
-    public void notifyAll(Food food) {
-        observers.forEach(foodObserver -> foodObserver.update(food));
+    synchronized public void notifyAll(OrderFood orderFood) {
+        observers.forEach(foodObserver -> foodObserver.update(orderFood));
     }
 }
