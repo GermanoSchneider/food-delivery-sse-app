@@ -1,15 +1,12 @@
 package com.example.fooddeliverysseapp.infra;
 
 import com.example.fooddeliverysseapp.domain.EventService;
-import com.example.fooddeliverysseapp.domain.OrderFood;
 import com.example.fooddeliverysseapp.domain.FoodService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -34,9 +31,6 @@ class OrderFoodControllerTest {
 
     @MockBean
     private FoodService foodService;
-
-    @Captor
-    private ArgumentCaptor<OrderFood> food;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -63,18 +57,14 @@ class OrderFoodControllerTest {
     @Test
     void shouldOrderFood() throws Exception {
 
-        var foodDto = DtoFixture.buildFoodDto();
-        var json = mapper.writeValueAsString(foodDto);
-
         doNothing()
                 .when(foodService)
-                .order(food.capture());
+                .order();
 
         mockMvc.perform(post("/order-food")
-                        .content(json)
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        verify(foodService).order(food.capture());
+        verify(foodService).order();
     }
 }

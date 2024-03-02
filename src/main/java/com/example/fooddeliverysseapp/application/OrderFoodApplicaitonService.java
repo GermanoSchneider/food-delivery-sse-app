@@ -14,7 +14,7 @@ class OrderFoodApplicaitonService implements FoodService {
     }
 
     @Override
-    public void order(OrderFood orderFood) {
-       orderFoodListener.notifyAll(orderFood);
+    public void order() {
+       orderFoodListener.notifyAll(new OrderFood());
     }
 }

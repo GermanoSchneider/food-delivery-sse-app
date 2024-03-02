@@ -1,8 +1,10 @@
 package com.example.fooddeliverysseapp.application;
 
-import com.example.fooddeliverysseapp.ModelFixture;
+import com.example.fooddeliverysseapp.domain.OrderFood;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,13 +21,14 @@ class OrderFoodServiceTest {
     @Mock
     private OrderFoodListener orderFoodListener;
 
+    @Captor
+    private ArgumentCaptor<OrderFood> orderFood;
+
     @Test
     void shouldOrderFoodWithSuccess() {
 
-        var food = ModelFixture.buildFood();
+        doNothing().when(orderFoodListener).notifyAll(orderFood.capture());
 
-        doNothing().when(orderFoodListener).notifyAll(food);
-
-        assertDoesNotThrow(() -> foodService.order(food));
+        assertDoesNotThrow(() -> foodService.order());
     }
 }
