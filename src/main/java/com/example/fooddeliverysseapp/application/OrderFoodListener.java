@@ -1,11 +1,11 @@
 package com.example.fooddeliverysseapp.application;
 
 import com.example.fooddeliverysseapp.domain.EventService;
-import com.example.fooddeliverysseapp.domain.OrderFood;
 import com.example.fooddeliverysseapp.domain.Observer;
+import com.example.fooddeliverysseapp.domain.OrderFood;
 import com.example.fooddeliverysseapp.domain.observers.DeliveredObservable;
-import com.example.fooddeliverysseapp.domain.observers.OnTheWayObservable;
 import com.example.fooddeliverysseapp.domain.observers.KitchenObservable;
+import com.example.fooddeliverysseapp.domain.observers.OnTheWayObservable;
 import com.example.fooddeliverysseapp.domain.observers.OrderObservable;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,8 @@ public class OrderFoodListener {
         );
     }
 
-    synchronized public void notifyAll(OrderFood orderFood) {
+
+    public void notifyAll(OrderFood orderFood) {
         observers.forEach(foodObserver -> foodObserver.update(orderFood));
     }
 }

@@ -1,9 +1,5 @@
 package com.example.fooddeliverysseapp.domain;
 
-import java.util.Random;
-
-import static java.lang.Double.*;
-
 public abstract class Observer {
 
     private final EventService eventService;
@@ -14,12 +10,8 @@ public abstract class Observer {
 
     protected void waitForProcess() {
 
-        Random random = new Random();
-
-        double randomTime = random.nextDouble(2000, 10000);
-
         try {
-            Thread.sleep(valueOf(randomTime).longValue());
+            Thread.sleep(2000L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

@@ -5,58 +5,47 @@
     <title>Food Delivery App</title>
 </head>
 <body>
-
-<h1>Food Delivery App</h1>
-
-<div id="orderFood-status">
+    <h1>Food Delivery App</h1>
     <div>
-        <h2>Orders</h2>
-        <div id="orders"></div>
+        <div id="order-status"></div>
     </div>
-    <hr/>
-    <div>
-        <h2>In the Kitchen</h2>
-        <div id="kitchen"></div>
-    </div>
-    <hr/>
-    <div>
-        <h2>On the way</h2>
-        <div id="on-the-way"></div>
-    </div>
-    <hr/>
-    <div>
-        <h2>Delivered</h2>
-        <div id="delivered"></div>
-    </div>
-</div>
-
 </body>
-
-
 <script>
 
-    var eventSource = new EventSource("/orderFood-stream");
+    var eventSource = new EventSource("/order-status");
 
-    eventSource.addEventListener("order", (event) => renderEvent("orders", event));
+    eventSource.addEventListener("order", (event) => renderEvent(event));
+    eventSource.addEventListener("kitchen", (event) => renderEvent(event));
+    eventSource.addEventListener("on-the-way", (event) => renderEvent(event));
+    eventSource.addEventListener("delivered", (event) => renderEvent(event));
 
-    eventSource.addEventListener("kitchen", (event) => renderEvent("kitchen", event));
+    function renderEvent(event) {
 
-    eventSource.addEventListener("on-the-way", (event) => renderEvent("on-the-way", event));
-
-    eventSource.addEventListener("delivered", (event) => renderEvent("delivered", event));
-
-    function renderEvent(id, event) {
-
-        var parsedValue = JSON.parse(event.data);
-
-        const data = document.getElementById(id);
+        const data = document.getElementById("order-status");
         const p = document.createElement("p");
-        const message = parsedValue.id + ": " + parsedValue.name;
+        const message = getOrderStatus(event);
         const text = document.createTextNode(message);
         p.appendChild(text)
         data.appendChild(p);
     }
 
-</script>
+    function getOrderStatus(event) {
 
+        var order = JSON.parse(event.data);
+
+        switch(order.status) {
+            case 'ORDER_PLACED':
+                return "Order " + order.id + " placed.";
+            case 'IN_THE_KITCHEN':
+                return "Order " + order.id + " is in the kitchen.";
+            case 'ON_THE_WAY':
+                return "Order " + order.id + " is on the way.";
+            case 'DELIVERED':
+                return "Order " + order.id + " delivered.";
+            default:
+                return "Unknown order status";
+        }
+    }
+
+</script>
 </html>
